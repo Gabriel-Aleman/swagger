@@ -1,0 +1,47 @@
+
+openapi: 3.0.0
+info:
+  title: API de Autenticación
+  version: "1.0.0"
+  description: |
+    Autenticación para acceder al resto de la API. El token expira cada día.
+
+servers:
+  - url: https://api-ats-dev.lantern.rocks/v2
+
+paths:
+  /auth/login:
+    post:
+      summary: Iniciar sesión
+      description: Retorna un token de autenticación. Requerido para cualquier otra operación.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: demo@hologic.com
+                password:
+                  type: string
+                  format: password
+                  example: demo12345
+      responses:
+        '200':
+          description: Autenticación exitosa
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6...
+        '401':
+          description: Credenciales incorrectas
