@@ -44,69 +44,34 @@ paths:
                     example: eyJhbGciOiJIUzI1NiIsInR5cCI6...
         '401':
           description: Credenciales incorrectas
-
-  /auth/verify:
-    get:
-      summary: Verificar token
-      description: Verifica si el token JWT es válido y no ha expirado
-      security:
-        - bearerAuth: []
-      responses:
-        '200':
-          description: Token válido
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  valid:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: "Token válido"
-                  user:
-                    type: object
-                    properties:
-                      email:
-                        type: string
-                        example: "demo@hologic.com"
-                      exp:
-                        type: integer
-                        description: Timestamp de expiración del token
-                        example: 1704153600
-        '401':
-          description: Token inválido o expirado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  valid:
-                    type: boolean
-                    example: false
-                  error:
-                    type: string
-                    example: "Token inválido"
-                  message:
-                    type: string
-                    example: "El token proporcionado no es válido o ha expirado"
-        '403':
-          description: Token no proporcionado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  valid:
-                    type: boolean
-                    example: false
-                  error:
-                    type: string
-                    example: "Token requerido"
-                  message:
-                    type: string
-                    example: "Se requiere un token de autenticación"
+  /auth/check-key:
+      get:
+        summary: Verificar token de autenticación
+        description: |
+          Verifica si el token enviado en la cabecera Authorization es válido.
+        security:
+          - bearerAuth: []
+        responses:
+          '200':
+            description: Token válido
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    valid:
+                      type: boolean
+                      example: true
+          '401':
+            description: Token inválido o ausente
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      example: Token inválido o no proporcionado
 
   /ufindit/device:
     get:
