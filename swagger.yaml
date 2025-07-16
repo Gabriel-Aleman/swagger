@@ -185,7 +185,7 @@ paths:
                     type: string
                     example: "Ocurrió un error inesperado"
 
-  /v2/ufindit/device/data:
+  /ufindit/device/data:
     get:
       summary: Obtener datos del dispositivo
       description: Recupera datos de un dispositivo específico dentro de un rango de fechas
